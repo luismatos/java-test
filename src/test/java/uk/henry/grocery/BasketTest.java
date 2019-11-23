@@ -118,4 +118,10 @@ class BasketTest {
 
         assertThat(basket.total()).isEqualTo(new BigDecimal(1.97).setScale(2, RoundingMode.HALF_UP));
     }
+
+    @Test
+    @DisplayName("No items in the basket")
+    void should_ReturnZero_When_noItemsInTheBasket() {
+        assertThat(basket.total()).isEqualTo(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP));
+    }
 }
