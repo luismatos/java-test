@@ -12,6 +12,14 @@ public class Item {
         this.quantity = quantity;
     }
 
+    public BigDecimal discount(final Basket basket) {
+        if (product.getDiscount().isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+
+        return product.getDiscount().get().discount(basket, this);
+    }
+
     public BigDecimal total() {
         return product.getPrice().multiply(quantity);
     }

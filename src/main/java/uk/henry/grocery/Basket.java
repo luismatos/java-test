@@ -18,10 +18,17 @@ public class Basket {
         return Collections.unmodifiableList(items);
     }
 
+    public BigDecimal discount() {
+        return this.items.stream()
+                .map(i -> i.discount(this))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
     public BigDecimal total() {
         return this.items.stream()
                 .map(Item::total)
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .subtract(discount())
                 .setScale(2, RoundingMode.HALF_UP);
     }
 }

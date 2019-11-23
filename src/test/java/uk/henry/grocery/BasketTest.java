@@ -7,6 +7,7 @@ import java.math.RoundingMode;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BasketTest {
     @Test
@@ -32,5 +33,21 @@ public class BasketTest {
         basket.addItem(new Item(new Product(new BigDecimal(56.78)), new BigDecimal(3)));
 
         assertThat(basket.total()).isEqualTo(new BigDecimal(195.02).setScale(2, RoundingMode.HALF_UP));
+    }
+
+    @Test
+    void soupAndLoafWithDiscount() {
+        Basket basket = new Basket();
+
+        final Product soupProduct = new Product(new BigDecimal(0.65));
+        final Item soupItem = new Item(soupProduct, new BigDecimal(3));
+        basket.addItem(soupItem);
+
+        final LoafDiscount loafDiscount = new LoafDiscount(soupProduct);
+        final Product loafProduct = new Product(new BigDecimal(0.80), loafDiscount);
+        final Item loafItem = new Item(loafProduct, new BigDecimal(2));
+        basket.addItem(loafItem);
+
+        assertEquals(new BigDecimal(3.15).setScale(2, RoundingMode.HALF_UP), basket.total());
     }
 }
