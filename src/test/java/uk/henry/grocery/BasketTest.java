@@ -3,6 +3,7 @@ package uk.henry.grocery;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,5 +23,14 @@ public class BasketTest {
 
         assertThat(items).hasSize(2);
         assertThat(items).contains(item1, item2);
+    }
+
+    @Test
+    void calculateTotal() {
+        Basket basket = new Basket();
+        basket.addItem(new Item(new BigDecimal(12.34), new BigDecimal(2)));
+        basket.addItem(new Item(new BigDecimal(56.78), new BigDecimal(3)));
+
+        assertThat(basket.total()).isEqualTo(new BigDecimal(195.02).setScale(2, RoundingMode.HALF_UP));
     }
 }
