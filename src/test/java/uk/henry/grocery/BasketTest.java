@@ -1,12 +1,12 @@
 package uk.henry.grocery;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,21 +21,8 @@ class BasketTest {
     }
 
     @Test
-    void addTwoItems_getTwoItem() {
-        Item item1 = new Item(new Product(new BigDecimal(5)), new BigDecimal(2));
-        basket.addItem(item1);
-
-        Item item2 = new Item(new Product(new BigDecimal(5)), new BigDecimal(2));
-        basket.addItem(item2);
-
-        List<Item> items = basket.getItems();
-
-        assertThat(items).hasSize(2);
-        assertThat(items).contains(item1, item2);
-    }
-
-    @Test
-    void calculateTotal() {
+    @DisplayName("multiple items without discount")
+    void should_calculateTotal_When_MultipleItemsWithoutDiscount() {
         basket.addItem(new Item(new Product(new BigDecimal(12.34)), new BigDecimal(2)));
         basket.addItem(new Item(new Product(new BigDecimal(56.78)), new BigDecimal(3)));
 
@@ -43,7 +30,8 @@ class BasketTest {
     }
 
     @Test
-    void soupAndLoafWithDiscountToday() {
+    @DisplayName("3 tins of soup and 2 loaves of bread, bought today")
+    void should_ApplyDiscount_When_soupAndLoafWithDiscountToday() {
         final Product soupProduct = new Product(new BigDecimal(0.65));
         final Item soupItem = new Item(soupProduct, new BigDecimal(3));
         basket.addItem(soupItem);
@@ -57,7 +45,8 @@ class BasketTest {
     }
 
     @Test
-    void soupAndLoafWithDiscountInEightDays() {
+    @DisplayName("3 tins of soup and 2 loaves of bread, bought in 8 days time")
+    void should_ApplyDiscount_When_SoupAndLoafWithDiscountInEightDays() {
         final Product soupProduct = new Product(new BigDecimal(0.65));
         final Item soupItem = new Item(soupProduct, new BigDecimal(3));
         basket.addItem(soupItem);
