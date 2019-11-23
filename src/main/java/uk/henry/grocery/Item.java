@@ -4,20 +4,20 @@ import java.math.BigDecimal;
 
 public class Item {
 
-    private final BigDecimal price;
+    private final Product product;
     private final BigDecimal quantity;
 
-    public Item(final BigDecimal price, final BigDecimal quantity) {
-        this.price = price;
+    public Item(final Product product, final BigDecimal quantity) {
+        this.product = product;
         this.quantity = quantity;
     }
 
     public BigDecimal total() {
-        return price.multiply(quantity);
+        return product.getPrice().multiply(quantity);
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public Product getProduct() {
+        return product;
     }
 
     public BigDecimal getQuantity() {
