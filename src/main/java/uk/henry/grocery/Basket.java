@@ -1,6 +1,7 @@
 package uk.henry.grocery;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Basket {
@@ -12,6 +13,6 @@ public class Basket {
     }
 
     public List<Item> getItems() {
-        return items;
+        return Collections.unmodifiableList(items);
     }
 }
