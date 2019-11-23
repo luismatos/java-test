@@ -1,5 +1,6 @@
 package uk.henry.grocery;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -9,11 +10,16 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BasketTest {
+class BasketTest {
+    private Basket basket;
+
+    @BeforeEach
+    void setUp() {
+        basket = new Basket();
+    }
+
     @Test
     void addTwoItems_getTwoItem() {
-        Basket basket = new Basket();
-
         Item item1 = new Item(new Product(new BigDecimal(5)), new BigDecimal(2));
         basket.addItem(item1);
 
@@ -28,7 +34,6 @@ public class BasketTest {
 
     @Test
     void calculateTotal() {
-        Basket basket = new Basket();
         basket.addItem(new Item(new Product(new BigDecimal(12.34)), new BigDecimal(2)));
         basket.addItem(new Item(new Product(new BigDecimal(56.78)), new BigDecimal(3)));
 
@@ -37,8 +42,6 @@ public class BasketTest {
 
     @Test
     void soupAndLoafWithDiscount() {
-        Basket basket = new Basket();
-
         final Product soupProduct = new Product(new BigDecimal(0.65));
         final Item soupItem = new Item(soupProduct, new BigDecimal(3));
         basket.addItem(soupItem);
