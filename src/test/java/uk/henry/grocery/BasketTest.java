@@ -7,17 +7,23 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BasketTest {
     private Basket basket;
-    private LocalDate now = LocalDate.now();
+    private LocalDate now;
+    private long daysEndOfNextMonth;
 
     @BeforeEach
     void setUp() {
         basket = new Basket();
         now = LocalDate.now();
+
+        final LocalDate endOfNextMonth = YearMonth.of(now.getYear(), now.getMonth()).plusMonths(1).atEndOfMonth();
+        daysEndOfNextMonth = ChronoUnit.DAYS.between(now, endOfNextMonth);
     }
 
     @Test
@@ -57,5 +63,22 @@ class BasketTest {
         basket.addItem(loafItem);
 
         assertThat(basket.total()).isEqualTo(new BigDecimal(3.55).setScale(2, RoundingMode.HALF_UP));
+    }
+
+    @Test
+    @DisplayName("6 apples and a bottle of milk, bought today")
+    void should_ApplyDiscount_When_ApplesWithDiscountAndMilkToday() {
+        final AppleDiscount appleDiscount = new AppleDiscount(now, now.plusDays(3), now.plusDays(daysEndOfNextMonth));
+        final Product appleProduct = new Product(new BigDecimal(0.10), appleDiscount);
+        final Item appleItem = new Item(appleProduct, new BigDecimal(6));
+        basket.addItem(appleItem);
+
+        final LoafDiscount loafDiscount = new LoafDiscount(now, now.minusDays(1), now.plusDays(7), null);
+        final Product milkProduct = new Product(new BigDecimal(1.30), loafDiscount);
+        final Item milkItem = new Item(milkProduct, new BigDecimal(1));
+
+        basket.addItem(milkItem);
+
+        assertThat(basket.total()).isEqualTo(new BigDecimal(1.90).setScale(2, RoundingMode.HALF_UP));
     }
 }

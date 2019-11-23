@@ -7,22 +7,18 @@ import java.util.Optional;
 /**
  * Buy 2 tins of soup and get a loaf of bread half price
  */
-public class LoafDiscount {
-    private final LocalDate now;
-    private final LocalDate from;
-    private final LocalDate to;
+public class LoafDiscount extends AbstractDiscount implements Discount {
 
     private final Product soup;
 
     public LoafDiscount(final LocalDate now, final LocalDate from, final LocalDate to, final Product soup) {
-        this.now = now;
-        this.from = from;
-        this.to = to;
+        super(now, from, to);
         this.soup = soup;
     }
 
+    @Override
     public BigDecimal discount(final Basket basket, final Item itemWithDiscount) {
-        if (now.isBefore(from) || now.isAfter(to)) {
+        if (isInactive()) {
             return BigDecimal.ZERO;
         }
 

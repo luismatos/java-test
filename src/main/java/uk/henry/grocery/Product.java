@@ -6,13 +6,13 @@ import java.util.Optional;
 public class Product {
 
     private final BigDecimal price;
-    private final LoafDiscount discount;
+    private final Discount discount;
 
     public Product(final BigDecimal price) {
         this(price, null);
     }
 
-    public Product(final BigDecimal price, final LoafDiscount discount) {
+    public Product(final BigDecimal price, final Discount discount) {
         this.price = price;
         this.discount = discount;
     }
@@ -21,7 +21,7 @@ public class Product {
         return price;
     }
 
-    public Optional<LoafDiscount> getDiscount() {
+    public Optional<Discount> getDiscount() {
         return Optional.ofNullable(discount);
     }
 }
