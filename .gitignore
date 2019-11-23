@@ -1,0 +1,40 @@
+# Gradle
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+.gradletasknamecache
+
+# Maven
+target/
+
+# IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+/bin/
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# STS
+.apt_generated
+.factorypath
+.settings
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+nbactions.xml
+nb-configuration.xml
+
+# OS
+.DS_Store
