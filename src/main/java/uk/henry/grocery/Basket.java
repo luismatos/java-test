@@ -20,7 +20,7 @@ public class Basket {
 
     public BigDecimal total() {
         return this.items.stream()
-                .map(i -> i.getPrice().multiply(i.getQuantity()))
+                .map(Item::total)
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 .setScale(2, RoundingMode.HALF_UP);
     }

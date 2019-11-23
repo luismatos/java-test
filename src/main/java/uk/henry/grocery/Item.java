@@ -12,6 +12,10 @@ public class Item {
         this.quantity = quantity;
     }
 
+    public BigDecimal total() {
+        return price.multiply(quantity);
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
