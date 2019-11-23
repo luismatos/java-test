@@ -3,6 +3,11 @@ package uk.henry.grocery;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import uk.henry.grocery.basket.Basket;
+import uk.henry.grocery.basket.Item;
+import uk.henry.grocery.basket.Product;
+import uk.henry.grocery.discount.AppleDiscount;
+import uk.henry.grocery.discount.LoafDiscount;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

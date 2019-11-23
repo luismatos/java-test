@@ -1,4 +1,4 @@
-package uk.henry.grocery;
+package uk.henry.grocery.discount;
 
 import java.time.LocalDate;
 

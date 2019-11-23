@@ -1,4 +1,4 @@
-package uk.henry.grocery;
+package uk.henry.grocery.basket;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

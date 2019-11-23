@@ -1,4 +1,8 @@
-package uk.henry.grocery;
+package uk.henry.grocery.discount;
+
+import uk.henry.grocery.basket.Basket;
+import uk.henry.grocery.basket.Item;
+import uk.henry.grocery.basket.Product;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

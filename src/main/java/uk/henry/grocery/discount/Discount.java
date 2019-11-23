@@ -1,4 +1,7 @@
-package uk.henry.grocery;
+package uk.henry.grocery.discount;
+
+import uk.henry.grocery.basket.Basket;
+import uk.henry.grocery.basket.Item;
 
 import java.math.BigDecimal;
 
