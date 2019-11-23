@@ -5,17 +5,19 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BasketTest {
     private Basket basket;
+    private LocalDate now = LocalDate.now();
 
     @BeforeEach
     void setUp() {
         basket = new Basket();
+        now = LocalDate.now();
     }
 
     @Test
@@ -41,16 +43,30 @@ class BasketTest {
     }
 
     @Test
-    void soupAndLoafWithDiscount() {
+    void soupAndLoafWithDiscountToday() {
         final Product soupProduct = new Product(new BigDecimal(0.65));
         final Item soupItem = new Item(soupProduct, new BigDecimal(3));
         basket.addItem(soupItem);
 
-        final LoafDiscount loafDiscount = new LoafDiscount(soupProduct);
+        final LoafDiscount loafDiscount = new LoafDiscount(now, now.minusDays(1), now.plusDays(7), soupProduct);
         final Product loafProduct = new Product(new BigDecimal(0.80), loafDiscount);
         final Item loafItem = new Item(loafProduct, new BigDecimal(2));
         basket.addItem(loafItem);
 
-        assertEquals(new BigDecimal(3.15).setScale(2, RoundingMode.HALF_UP), basket.total());
+        assertThat(basket.total()).isEqualTo(new BigDecimal(3.15).setScale(2, RoundingMode.HALF_UP));
+    }
+
+    @Test
+    void soupAndLoafWithDiscountInEightDays() {
+        final Product soupProduct = new Product(new BigDecimal(0.65));
+        final Item soupItem = new Item(soupProduct, new BigDecimal(3));
+        basket.addItem(soupItem);
+
+        final LoafDiscount loafDiscount = new LoafDiscount(now.plusDays(8), now.minusDays(1), now.plusDays(7), soupProduct);
+        final Product loafProduct = new Product(new BigDecimal(0.80), loafDiscount);
+        final Item loafItem = new Item(loafProduct, new BigDecimal(2));
+        basket.addItem(loafItem);
+
+        assertThat(basket.total()).isEqualTo(new BigDecimal(3.55).setScale(2, RoundingMode.HALF_UP));
     }
 }
