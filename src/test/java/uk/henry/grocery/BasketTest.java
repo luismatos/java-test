@@ -98,4 +98,24 @@ class BasketTest {
 
         assertThat(basket.total()).isEqualTo(new BigDecimal(1.84).setScale(2, RoundingMode.HALF_UP));
     }
+
+    @Test
+    @DisplayName("3 apples, 2 tins of soup and a loaf of bread, bought in 5 days time")
+    void should_ApplyDiscount_When_ApplesWithDiscountSoupAndLoafWithDiscountInFiveDays() {
+        final AppleDiscount appleDiscount = new AppleDiscount(now.plusDays(5), now.plusDays(3), now.plusDays(daysEndOfNextMonth));
+        final Product appleProduct = new Product(new BigDecimal(0.10), appleDiscount);
+        final Item appleItem = new Item(appleProduct, new BigDecimal(3));
+        basket.addItem(appleItem);
+
+        final Product soupProduct = new Product(new BigDecimal(0.65));
+        final Item soupItem = new Item(soupProduct, new BigDecimal(2));
+        basket.addItem(soupItem);
+
+        final LoafDiscount loafDiscount = new LoafDiscount(now.plusDays(5), now.minusDays(1), now.plusDays(7), soupProduct);
+        final Product loafProduct = new Product(new BigDecimal(0.80), loafDiscount);
+        final Item loafItem = new Item(loafProduct, new BigDecimal(1));
+        basket.addItem(loafItem);
+
+        assertThat(basket.total()).isEqualTo(new BigDecimal(1.97).setScale(2, RoundingMode.HALF_UP));
+    }
 }
